@@ -25,8 +25,13 @@
             }
         }
 
+        // setting nama collection
         public function get_Collection($collection_name) {
-            return $this->collection = $this->database->selectCollection($collection_name);
+            if (($this->collection_name = $collection_name) == NULL) {
+                echo "Parameter collection NotFound";
+            } else {
+                return $this->collection = $this->database->selectCollection($collection_name);
+            }
         }
     }
 
@@ -36,7 +41,7 @@
     $sql->set_MongoDatabase("backend_mongodb");
     $collection_create = $sql->get_Collection("collection_mongodb");
 
-    $data = array('nama' => "Alif Benden", "nim" => 12541);
+    $data = array('nama' => "Akbar Bondan Permana", "nim" => 125410148);
     $repost = $collection_create->insert($data);
     if(!$repost) {
         die("data not insert");
