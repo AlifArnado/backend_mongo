@@ -33,14 +33,26 @@
                 return $this->collection = $this->database->selectCollection($collection_name);
             }
         }
+
+        // setting set sql connec full
+        public function set_connection_full($database_name) {
+            try {
+                $this->koneksi = new Mongo();
+                $this->database = $this->koneksi->selectDB($database_name);
+            } catch (MongoConnectionException $e) {
+                die($e->getMessage());
+            } catch (Exception $e) {
+                throw $e;
+                die($e->getMessage());
+            }
+
+        }
     }
 
     /*----------  testing  ----------*/
     $sql = new SQL_Manager();
-    $sql->get_KoneksiMongoDB();
-    $sql->set_MongoDatabase("backend_mongodb");
-    $collection_create = $sql->get_Collection("collection_mongodb");
-
+    $sql->set_connection_full("backend_db");
+    $collection_create = $sql->get_Collection("abckend");
     $data = array('nama' => "Akbar Bondan Permana", "nim" => 125410148);
     $repost = $collection_create->insert($data);
     if(!$repost) {
