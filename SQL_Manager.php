@@ -59,6 +59,11 @@
                 return $this->database = $this->koneksi->selectDB($database_name); // memilih database
             }
         }
+
+        public function getMongoCreateDB() {
+            return $this->database;
+        }
+
         /*----------  end fungsi membuat database  ----------*/
 
         /**
@@ -73,6 +78,11 @@
                 return $this->collection = $this->database->selectCollection($collection_name);
             }
         }
+
+        public function getMongoCreateCollection() {
+            return $this->collection;
+        }
+
         /*----------  end fungsi membuat collection  ----------*/
 
 
