@@ -106,8 +106,18 @@
         }
         /*----------  end fungsi untuk insert data  ----------*/
 
+        /**
+         * fungsi untuk menampilkan data secara keseluruhan
+         * find() , find().pretty()
+         */
 
-        /*----------  fungsi view data  ----------*/
+        public function mongoViewAll() { // find()
+
+        }
+
+        public function mongoViewJson() { // find().pretty()
+
+        }
         /*----------  fungsi edit data  ----------*/
         /*----------  fungsi delete data  ----------*/
         /*----------  fungsi find data  ----------*/
