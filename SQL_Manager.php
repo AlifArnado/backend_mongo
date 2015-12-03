@@ -7,6 +7,7 @@
         public $koneksi; // variabel untuk koneksi MongoDB
         public $database;
         public $collection;
+        publc $recod // variabel untuk insert data
 
 
         /**
@@ -85,17 +86,22 @@
 
         /*----------  end fungsi membuat collection  ----------*/
 
-
         /**
          * fungsi untuk insert data
-         *
+         * $recod = array("json parse");
          */
-
-        public function mongoInsert($recod) {
+        public function mongoInsert($data_recod) {
+        // try insert data MongoDB
             try {
-                $this->getMongoCreateCollection->insert($recod);
-            } catch (Exception $e) {
-                die("insert data vailed ". $e->getMessage());
+                if (($this->recod = $data_recod) == NULL) { // cek kesalahan jika data kosong
+                    die("data recod not found");
+                } else {
+                    return $this->recod = $this->getMongoCreateCollection()->insert($recod);
+                }
+                // cek data inputan
+                var_dump($recod);
+            } catch (Exception $e) { // cek kesalahan
+                die("insert data valid ". $e->getMessage());
             }
         }
         /*----------  end fungsi untuk insert data  ----------*/
