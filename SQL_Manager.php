@@ -86,7 +86,21 @@
         /*----------  end fungsi membuat collection  ----------*/
 
 
-        /*----------  fungsi insert data  ----------*/
+        /**
+         * fungsi untuk insert data
+         *
+         */
+
+        public function mongoInsert($recod) {
+            try {
+                $this->getMongoCreateCollection->insert($recod);
+            } catch (Exception $e) {
+                die("insert data vailed ". $e->getMessage());
+            }
+        }
+        /*----------  end fungsi untuk insert data  ----------*/
+
+
         /*----------  fungsi view data  ----------*/
         /*----------  fungsi edit data  ----------*/
         /*----------  fungsi delete data  ----------*/
