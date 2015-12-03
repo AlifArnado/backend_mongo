@@ -7,7 +7,7 @@
         public $koneksi; // variabel untuk koneksi MongoDB
         public $database;
         public $collection;
-        publc $recod // variabel untuk insert data
+        public $recod; // variabel untuk insert data
 
 
         /**
@@ -101,16 +101,17 @@
                 // cek data inputan
                 var_dump($recod);
             } catch (Exception $e) { // cek kesalahan
-                die("insert data valid ". $e->getMessage());
+                die("Terdapat kesalahan". $e->getMessage());
+            } catch (MongoCursorException $e) {
+                die("Vailed dalam insert data". $e->getMessage());
             }
         }
         /*----------  end fungsi untuk insert data  ----------*/
 
         /**
          * fungsi untuk menampilkan data secara keseluruhan
-         * find() , find().pretty()
+         * find() , find().pretty() , find().limit()
          */
-
         public function mongoViewAll() { // find()
 
         }
@@ -118,11 +119,13 @@
         public function mongoViewJson() { // find().pretty()
 
         }
+
+        public function mongoViewLimit($limit_number) { // find().limit()
+
+        }
         /*----------  fungsi edit data  ----------*/
         /*----------  fungsi delete data  ----------*/
         /*----------  fungsi find data  ----------*/
-
-
 
 
 
