@@ -9,6 +9,7 @@
         public $database;
         public $collection;
         public $recod; // variabel untuk insert data
+        public $view_cursor; // variabel untuk find data
 
         /**
          * membuat koneksi MongoDB
@@ -103,7 +104,24 @@
             }
 
         }
-        /*----------  end funsgi insert data  ----------*/
+        /*----------  end fungsi insert data  ----------*/
+
+        /**
+         * fungsi untuk menampilkan dan mencari data mongodb
+         * find(), findOne();
+         *
+         */
+
+        public function mongoFindAll()
+        {
+            $view_cursor = $this->getMongoCreateCollection()->find();
+            foreach ($view_cursor as $value) {
+                var_dump($value); // coba tampilkan data
+            }
+        }
+        /*----------  end fungsi find data  ----------*/
+
+
 
 
 
@@ -127,21 +145,29 @@
     echo "<br>";
     echo "Insert data <br>";
     echo "<br>";
+    /*----------  data yang dimasukan  ----------*/
+
     $recod_data1 = array('nama' => "Amelia Brenda SP", "nim" => 125410140);
     $recod_data2 = array('nama' => "Akbar Bondan Permana", "nim" => 123410148);
     $recod_data3 = array('nama' => "Alif Benden Arnado", "nim" => 125410148);
 
-    $group_recod = array($recod_data1, $recod_data2, $recod_data3);
-
-    foreach ($group_recod as $value) {
-        $cursor = $test->mongoInsert($value); // masukan data
-        echo "<pre>";
-        var_dump($value);
-        echo "</pre>";
-    }
-
+    // testing one recod
     //$cursor = $test->mongoInsert($recod_data); // masukan data
     //var_dump($cursor);
+
+
+    // menggabungkan data menjadi  array index
+    // $group_recod = array($recod_data1, $recod_data2, $recod_data3); // testing multi recod
+    // looing insert ulit recode
+    // foreach ($group_recod as $value) {
+    //     $cursor = $test->mongoInsert($value); // masukan data
+    //     echo "<pre>";
+    //     var_dump($value);
+    //     echo "</pre>";
+    // }
+
+    echo "Tampilkan data <br>";
+    $test->mongoFindAll();
 
 
 ?>
