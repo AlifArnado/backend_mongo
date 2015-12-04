@@ -108,13 +108,29 @@
 
         /**
          * fungsi untuk menampilkan dan mencari data mongodb
-         * find(), findOne();
+         * find(), findOne(), findLimit();
          *
          */
 
-        public function mongoFindAll()
+        public function mongoFindAll() // sama dengan db.name_collection.find();
         {
             $view_cursor = $this->getMongoCreateCollection()->find();
+            foreach ($view_cursor as $value) {
+                var_dump($value); // coba tampilkan data
+            }
+        }
+
+        public function mongoFindOne() // sama dengan db.name_collection.findOne();
+        {
+            $view_cursor = $this->getMongoCreateCollection()->findOne();
+            foreach ($view_cursor as $value) {
+                var_dump($value); // coba tampilkan data
+            }
+        }
+
+        public function mongoFindLimit($limit_data) // sama dengan db.name_collection.find().limit(jum_limit);
+        {
+            $view_cursor = $this->getMongoCreateCollection()->find()->limit($limit_data);
             foreach ($view_cursor as $value) {
                 var_dump($value); // coba tampilkan data
             }
@@ -167,7 +183,16 @@
     // }
 
     echo "Tampilkan data <br>";
+    echo "<pre>";
     $test->mongoFindAll();
+    echo "<br>";
+    echo "<br>";
+    $test->mongoFindOne();
+    echo "<br>";
+    echo "<br>";
+    $test->mongoFindLimit(3);
+
+    echo "</pre>";
 
 
 ?>
