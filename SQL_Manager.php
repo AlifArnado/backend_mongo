@@ -1,5 +1,6 @@
 <?php
-    class SQL_Manager {
+    class SQL_Manager
+    {
 
         /**
          * definisi variabel
@@ -8,7 +9,6 @@
         public $database;
         public $collection;
         public $recod; // variabel untuk insert data
-
 
         /**
          * membuat koneksi MongoDB
@@ -64,7 +64,6 @@
         public function getMongoCreateDB() {
             return $this->database;
         }
-
         /*----------  end fungsi membuat database  ----------*/
 
         /**
@@ -83,145 +82,66 @@
         public function getMongoCreateCollection() {
             return $this->collection;
         }
-
         /*----------  end fungsi membuat collection  ----------*/
 
         /**
-         * fungsi untuk insert data
-         * $recod = array("json parse");
+         * Insert data MongoDB
+         *
          */
-        public function mongoInsert($data_recod) {
-        // try insert data MongoDB
-            try {
-                if (($this->recod = $data_recod) == NULL) { // cek kesalahan jika data kosong
-                    die("data recod not found");
+
+        public function mongoInsert($data_record) {
+            try { // cek data
+                if (($this->data_record = $data_record) == NULL) { // jika parameter null
+                    die("data null parameter". mysql_error());
                 } else {
-                    return $this->recod = $this->getMongoCreateCollection()->insert($recod);
+                    return $this->getMongoCreateCollection()->insert($data_record);
                 }
-                // cek data inputan
-                var_dump($recod);
-            } catch (Exception $e) { // cek kesalahan
-                die("Terdapat kesalahan". $e->getMessage());
             } catch (MongoCursorException $e) {
-                die("Vailed dalam insert data". $e->getMessage());
-            }
-        }
-        /*----------  end fungsi untuk insert data  ----------*/
-
-        /**
-         * fungsi untuk menampilkan data secara keseluruhan
-         * find() , find().pretty() , find().limit()
-         */
-        public function mongoViewAll() { // find()
-
-        }
-
-        public function mongoViewJson() { // find().pretty()
-
-        }
-
-        public function mongoViewLimit($limit_number) { // find().limit()
-
-        }
-        /*----------  fungsi edit data  ----------*/
-        /*----------  fungsi delete data  ----------*/
-        /*----------  fungsi find data  ----------*/
-
-
-
-        /*----------  setting database MongoDB  ----------*/
-        public function get_KoneksiMongoDB()
-           {
-               try {
-                    // bila berhasil
-                   $this->koneksi = new Mongo();
-               } catch (Exception $e) {
-                    // bila problem
-                   die($e->getMessage());
-               }
-           }
-
-        // setting nama databse
-        public function set_MongoDatabase($database_name) {
-            if(($this->database_name = $database_name) == NULL) {
-                echo "Parameter database NotFound";
-            } else {
-                return $this->database = $this->koneksi->selectDB($database_name);
-            }
-        }
-
-        //problem
-        public function get_DatabaseName() {
-            return $this->database_name;
-        }
-
-        //problem
-        public function get_CollectionName() {
-            return $this->collection_name;
-        }
-
-        // definisi database select fleksibel if variabel value it
-        public function get_selectDBMongo_fex() {
-            return $this->koneksi->selectDB(SQL_Manager::get_MongoDatabase);
-        }
-
-        // call back value select database MongoDB
-        public function get_MongoDatabase() {
-            return $this->database;
-        }
-
-        // setting nama collection
-        public function get_Collection($collection_name) {
-            if (($this->collection_name = $collection_name) == NULL) {
-                echo "Parameter collection NotFound";
-            } else {
-                return $this->collection = $this->database->selectCollection($collection_name);
-            }
-        }
-
-        // definisi collection flexsibel if variabel value it
-        public function get_Collection_fex() {
-            return $this->database->selectCollection(SQL_Manager::get_MongoCollection());
-        }
-
-        // call back value select Collection MongoDB
-        public function get_MongoCollection() {
-            return $this->collection;
-        }
-
-        // setting set sql connec full
-        public function set_connection_full() {
-            try {
-                $this->koneksi = new Mongo();
-                return $this->database = $this->koneksi->selectDB(SQL_Manager::get_MongoDatabase());
-                return $this->collection = $this->database->selectCollection(SQL_Manager::get_MongoCollection());
-            } catch (MongoConnectionException $e) {
-                die($e->getMessage());
+                die("data insert vailed". $e->getMessage());
             } catch (Exception $e) {
-                throw $e;
-                die($e->getMessage());
+                die("error data insert". $e->getMessage());
             }
+
         }
+        /*----------  end funsgi insert data  ----------*/
+
+
+
+
+    } // end class SQL_Manager
+
+    $test = new SQL_Manager(); // membuat objek dari class SQL_Manager
+    var_dump($test->mongoCreateKoneksi()); // membuat koneksi
+    echo "<br>";
+    echo $test->getMongoKoneksi(); // test emanggil nilai koneksi localhost
+    echo "<br>";
+
+    var_dump($test->mongoCreateDatabase("backendmongo"));
+    echo "<br>";
+    echo $test->getMongoCreateDB();
+    echo "<br>";
+
+    var_dump($test->mongoCreateCollection("backendmongo"));
+    echo "<br>";
+    echo $test->getMongoCreateCollection();
+    echo "<br>";
+    echo "Insert data <br>";
+    echo "<br>";
+    $recod_data1 = array('nama' => "Amelia Brenda SP", "nim" => 125410140);
+    $recod_data2 = array('nama' => "Akbar Bondan Permana", "nim" => 123410148);
+    $recod_data3 = array('nama' => "Alif Benden Arnado", "nim" => 125410148);
+
+    $group_recod = array($recod_data1, $recod_data2, $recod_data3);
+
+    foreach ($group_recod as $value) {
+        $cursor = $test->mongoInsert($value); // masukan data
+        echo "<pre>";
+        var_dump($value);
+        echo "</pre>";
     }
 
-    /*----------  testing  ----------*/
-    $sql = new SQL_Manager();
-    var_dump($sql->mongoCreateKoneksi());
-    // $sql->database = "backendMongo";
-    // $sql->collection = "alif_backend";
+    //$cursor = $test->mongoInsert($recod_data); // masukan data
+    //var_dump($cursor);
 
-    // echo $sql->get_DatabaseName();
-    // echo $sql->get_CollectionName();
 
-    // $sql->set_connection_full();
-
-    // $collection_create = $sql->get_Collection_fex();
-    // $data = array('nama' => "Alif Benden Permana", "nim" => 125410148);
-    // $repost = $collection_create->insert($data);
-    // if(!$repost) {
-    //     die("data not insert");
-    // }
-    // echo "<pre>";
-    //     var_dump($data);
-    // echo "</pre>";
 ?>
